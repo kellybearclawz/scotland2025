@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scotland 2025 Trip</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="max-w-2xl mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4 text-center">Scotland 2025 Trip Planner</h1>
+
+    <label for="daySelect" class="block mb-2 font-medium">Select a Day</label>
+    <select id="daySelect" class="w-full p-2 mb-4 border rounded">
+      <option value="day1">June 10 – Edinburgh</option>
+      <option value="day2">June 11 – Edinburgh Exploration</option>
+      <!-- Add more days here -->
+    </select>
+
+    <div id="day1" class="day-content">
+      <h2 class="text-xl font-semibold mb-2">Day 1 – Tuesday, June 10, 2025 (Edinburgh)</h2>
+      <p><strong>Morning:</strong></p>
+      <ul class="list-disc list-inside mb-2">
+        <li>Relax near the Royal Mile until the Bercaws arrive</li>
+        <li>Meet at <a href="https://maps.app.goo.gl/Zg9o6nJHwtatH7kV9" target="_blank" class="text-blue-600 underline">Picardy Place Tram Stop</a> by Sherlock Holmes Statue</li>
+        <li>Drop bags at Airbnb</li>
+        <li>Coffee break?</li>
+        <li>Walk by Birthplace of Sir Arthur Conan Doyle</li>
+        <li><a href="https://maps.app.goo.gl/9k3dMWhSKBoZ2Jjq6" target="_blank" class="text-blue-600 underline">St. Mary’s Catholic Cathedral</a></li>
+        <li><a href="https://maps.app.goo.gl/hHgx9jRDRvEA8kJz8" target="_blank" class="text-blue-600 underline">St. Giles Cathedral</a></li>
+      </ul>
+
+      <p><strong>Afternoon:</strong></p>
+      <ul class="list-disc list-inside mb-2">
+        <li>Lunch at Malt Shovel Inn (or similar)</li>
+        <li>Explore Royal Mile via Rick Steves’ Audio Tour (start at Castle Esplanade → end at Holyroodhouse Palace)</li>
+        <li>Visit John Knox House</li>
+        <li>Visit The Writers Museum</li>
+      </ul>
+
+      <p><strong>Evening:</strong></p>
+      <ul class="list-disc list-inside mb-2">
+        <li>Check in to VRBO (~4:00 PM)</li>
+        <li>Dinner nearby or cook at the apartment</li>
+        <li>Optional: Local pub</li>
+      </ul>
+    </div>
+
+    <!-- More day divs here -->
+
+    <iframe
+      src="https://www.google.com/maps/d/u/0/embed?mid=1m219PVUOoQ14ihsQUo3PIlIBC9MUaVc"
+      width="100%" height="480" class="mt-6 border rounded">
+    </iframe>
+  </div>
+
+  <script>
+    const select = document.getElementById('daySelect');
+    const dayDivs = document.querySelectorAll('.day-content');
+
+    function showSelectedDay() {
+      dayDivs.forEach(div => div.style.display = 'none');
+      const selected = document.getElementById(select.value);
+      if (selected) selected.style.display = 'block';
+    }
+
+    select.addEventListener('change', showSelectedDay);
+    window.onload = showSelectedDay;
+  </script>
+</body>
+</html>
