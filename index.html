@@ -406,5 +406,57 @@
   select.scrollIntoView({ behavior: 'smooth' });
 };
   </script>
+  <script>
+const sheetId = "1HaUeSitCzQh3n4b_f-uvpnUIQIjc67a7QqCXJb0vpyU";
+const sheetName = "Itinerary";
+const sheetURL = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?sheet=${sheetName}`;
+
+async function fetchItineraryData() {
+  const res = await fetch(sheetURL);
+  const text = await res.text();
+  const json = JSON.parse(text.substring(47).slice(0, -2));
+  const rows = json.table.rows.map(r => ({
+    date: r.c[0]?.v || "",
+    day: r.c[1]?.v || "",
+    time: r.c[2]?.v || "",
+    activity: r.c[3]?.v || "",
+    map: r.c[4]?.v || ""
+  }));
+  return rows;
+}
+
+async function showSelectedDay() {
+  const selectedId = document.getElementById("daySelect").value;
+  const targetDiv = document.getElementById(selectedId);
+  document.querySelectorAll(".day-content").forEach(div => (div.style.display = "none"));
+  if (!targetDiv) return;
+
+  const rows = await fetchItineraryData();
+  const todayRows = rows.filter(r => selectedId === r.day);
+  const parts = { Morning: [], Afternoon: [], Evening: [] };
+
+  todayRows.forEach(r => {
+    const html = r.map ? `<li><a href="${r.map}" target="_blank" class="text-blue-600 underline">${r.activity}</a></li>` : `<li>${r.activity}</li>`;
+    if (parts[r.time]) parts[r.time].push(html);
+  });
+
+  targetDiv.innerHTML = `<h2 class="text-xl font-semibold mb-2">${selectedId}</h2>`;
+  for (const key of ["Morning", "Afternoon", "Evening"]) {
+    targetDiv.innerHTML += `
+      <div class="mb-4">
+        <p class="font-semibold">${key}:</p>
+        <ul class="list-disc list-inside">
+          ${parts[key].join("") || "<li>No plans listed</li>"}
+        </ul>
+      </div>`;
+  }
+
+  targetDiv.style.display = "block";
+}
+
+document.getElementById("daySelect").addEventListener("change", showSelectedDay);
+window.onload = showSelectedDay;
+</script>
+
 </body>
 </html>
